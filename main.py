@@ -1,13 +1,23 @@
+"""
+A simple console tic-tac-toe game for 2 players in Python
+"""
+
 import tic_tac_exceptions as tic_tac_ex
 
 
 class TicTacGame:
+    """
+    Main class of the game
+    """
     def __init__(self):
         self.board = [[None] * 3, [None] * 3, [None] * 3]
         self.symbols_to_text = {'X': 'Крестики', '0': 'Нолики'}
         self.turn = 'X'
 
     def show_board(self):
+        """
+        Prints the game board to the console
+        """
         self.draw_top()
         self.draw_line(0)
         self.draw_middle()
@@ -18,17 +28,20 @@ class TicTacGame:
 
     @staticmethod
     def draw_top():
+        """
+        Prints top line of the board
+        """
         print('\u250c\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2510')
 
-    def draw_line(self, n):
+    def draw_line(self, line_number):
         """
         Print n-th line of the grid to the console
-        :param n: number of line to print (0-2)
+        :param line_number: number of line to print (0-2)
         """
-        print('\u2502 ' + self.get_tile(0, n) +
-              ' \u2502 ' + self.get_tile(1, n) +
-              ' \u2502 ' + self.get_tile(2, n) +
-              ' \u2502 ' + str(n+1))
+        print('\u2502 ' + self.get_tile(0, line_number) +
+              ' \u2502 ' + self.get_tile(1, line_number) +
+              ' \u2502 ' + self.get_tile(2, line_number) +
+              ' \u2502 ' + str(line_number + 1))
 
     def get_tile(self, x, y):
         """
@@ -40,22 +53,29 @@ class TicTacGame:
         tile = self.board[y][x]
         if tile is None:
             return ' '
-        else:
-            return tile
+
+        return tile
 
     @staticmethod
     def draw_middle():
+        """
+        Prints middle line of the board
+        """
         print('\u251c\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2524')
 
     @staticmethod
     def draw_bottom():
+        """
+        Prints bottom line of the board
+        """
         print('\u2514\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2518')
         print('  1   2   3  ')
 
     def validate_input(self, raw_input):
         """
         If input us correct, returns it as tuple(int, int), throws appropriate exception otherwise.
-        Input string is considered correct if it consists of 2 integers from 1 to 3 separated by whitespace(s).
+        Input string is considered correct if it consists of 2 integers from 1 to 3
+        separated by whitespace(s).
         Leading ot trailing whitespaces do not affect the correctness.
         :param raw_input: input string to parse and validate
         :return: (x: int, y: int), 1 < x, y < 3 if input is correct
@@ -67,8 +87,8 @@ class TicTacGame:
             raise tic_tac_ex.CoordinatesTooLongError()
         try:
             x, y = int(raw_coordinates[0].strip()), int(raw_coordinates[1].strip())
-        except ValueError:
-            raise tic_tac_ex.NonIntegerCoordinatesError()
+        except ValueError as ex:
+            raise tic_tac_ex.NonIntegerCoordinatesError() from ex
         if x < 1 or y < 1:
             raise tic_tac_ex.CoordinatesTooSmallError()
         if x > 3 or y > 3:
@@ -78,6 +98,10 @@ class TicTacGame:
         return x, y
 
     def change_turn(self):
+        """
+        Changes active player from X to 0 or from 0 to X
+        :return:
+        """
         if self.turn == 'X':
             self.turn = '0'
         else:
@@ -103,6 +127,8 @@ class TicTacGame:
         if self.board[2][0] == self.board[1][1] and self.board[2][0] == self.board[0][2]:
             return self.board[1][1]
 
+        return None
+
     def start_game(self):
         """
         Controls the game process^ allows two players to repeatedly make turns,
@@ -127,10 +153,20 @@ class TicTacGame:
             print('Игра окончена! Победили ' + self.symbols_to_text[self.turn])
 
     def make_turn(self, x, y):
+        """
+        Place X or 0 in the tile (x, y) according to turn order
+        :param x: x coordinate of the tile (0-2)
+        :param y: y coordinate of the tile (0-2)
+        """
         self.board[y - 1][x - 1] = self.turn
         self.change_turn()
 
     def input_coordinates(self):
+        """
+        Ask user to input coordinates until they insert them correctly
+        In case of incorrect input, print an error message
+        :return: (x: int, y: int)
+        """
         coordinates = None
         while coordinates is None:
             raw_input = input('Введите координаты через пробел: ')
@@ -143,9 +179,11 @@ class TicTacGame:
             except tic_tac_ex.NonIntegerCoordinatesError:
                 print("Координаты не являются целыми числами или разделены не пробелом!")
             except tic_tac_ex.CoordinatesTooBigError:
-                print("Одна из координат имеет слишком большое значение (используйте от 1 до 3 включительно)")
+                print("Одна из координат имеет слишком большое значение "
+                      "(используйте от 1 до 3 включительно)")
             except tic_tac_ex.CoordinatesTooSmallError:
-                print("Одна из координат имеет слишком маленькое значение (используйте от 1 до 3 включительно)")
+                print("Одна из координат имеет слишком маленькое значение "
+                      "(используйте от 1 до 3 включительно)")
             except tic_tac_ex.SpaceAlreadyOccupiedError:
                 print("Ход невозможен, так как выбранная клетка уже занята!")
         return coordinates
