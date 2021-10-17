@@ -1,0 +1,13 @@
+************* Module main
+main.py:46:4: C0103: Argument name "x" doesn't conform to snake_case naming style (invalid-name)
+main.py:46:4: C0103: Argument name "y" doesn't conform to snake_case naming style (invalid-name)
+main.py:89:12: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
+main.py:89:15: C0103: Variable name "y" doesn't conform to snake_case naming style (invalid-name)
+main.py:143:12: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
+main.py:143:15: C0103: Variable name "y" doesn't conform to snake_case naming style (invalid-name)
+main.py:155:4: C0103: Argument name "x" doesn't conform to snake_case naming style (invalid-name)
+main.py:155:4: C0103: Argument name "y" doesn't conform to snake_case naming style (invalid-name)
+
+------------------------------------------------------------------
+Your code has been rated at 9.21/10 (previous run: 9.21/10, +0.00)
+
