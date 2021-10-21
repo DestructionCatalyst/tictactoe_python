@@ -129,7 +129,7 @@ class TicTacGame:
 
         return None
 
-    def start_game(self):
+    def start_game(self, input_function=lambda: input('Введите координаты через пробел: ')):
         """
         Controls the game process^ allows two players to repeatedly make turns,
          and shows the result of the game after it is ended
@@ -140,7 +140,7 @@ class TicTacGame:
         while winner is None and turn_count < 9:
             self.show_board()
             print('Ходят ' + self.symbols_to_text[self.turn])
-            x, y = self.input_coordinates()
+            x, y = self.input_coordinates(input_function)
             self.make_turn(x, y)
             turn_count += 1
             winner = self.check_winner()
@@ -161,7 +161,7 @@ class TicTacGame:
         self.board[y - 1][x - 1] = self.turn
         self.change_turn()
 
-    def input_coordinates(self):
+    def input_coordinates(self, input_function):
         """
         Ask user to input coordinates until they insert them correctly
         In case of incorrect input, print an error message
@@ -169,7 +169,7 @@ class TicTacGame:
         """
         coordinates = None
         while coordinates is None:
-            raw_input = input('Введите координаты через пробел: ')
+            raw_input = input_function()
             try:
                 coordinates = self.validate_input(raw_input)
             except tic_tac_ex.CoordinatesTooShortError:

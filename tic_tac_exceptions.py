@@ -24,3 +24,5 @@ class CoordinatesTooBigError(CoordinatesError):
 
 class SpaceAlreadyOccupiedError(CoordinatesError):
     pass
+
+
