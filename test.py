@@ -16,16 +16,17 @@ class TestTicTacToe(unittest.TestCase):
                 self.assertIsNone(self.game.board[i][j])
 
     def test_input_validation(self):
-        self.assertRaises(tic_tac_ex.CoordinatesTooShortError, lambda: self.game.validate_input('1-1'))
-        self.assertRaises(tic_tac_ex.CoordinatesTooShortError, lambda: self.game.validate_input('2'))
-        self.assertRaises(tic_tac_ex.CoordinatesTooLongError, lambda: self.game.validate_input('1 2 3'))
-        self.assertRaises(tic_tac_ex.NonIntegerCoordinatesError, lambda: self.game.validate_input('2, 1'))
-        self.assertRaises(tic_tac_ex.NonIntegerCoordinatesError, lambda: self.game.validate_input('2 q'))
-        self.assertRaises(tic_tac_ex.CoordinatesTooSmallError, lambda: self.game.validate_input('1 0'))
-        self.assertRaises(tic_tac_ex.CoordinatesTooBigError, lambda: self.game.validate_input('4 1'))
-        self.assertRaises(tic_tac_ex.CoordinatesTooSmallError, lambda: self.game.validate_input('0 5'))
         self.game.make_turn(2, 2)
-        self.assertRaises(tic_tac_ex.SpaceAlreadyOccupiedError, lambda: self.game.validate_input('2 2'))
+        lst = [(tic_tac_ex.CoordinatesTooShortError, ['1-1', '2']),
+               (tic_tac_ex.CoordinatesTooLongError, ['1 2 3']),
+               (tic_tac_ex.NonIntegerCoordinatesError, ['2, 1', '2 q']),
+               (tic_tac_ex.CoordinatesTooSmallError, ['1 0', '-2 1']),
+               (tic_tac_ex.CoordinatesTooBigError, ['4 1', '2 100']),
+               (tic_tac_ex.SpaceAlreadyOccupiedError, ['2 2'])]
+        for exception, entries in lst:
+            with self.assertRaises(exception):
+                for entry in entries:
+                    self.game.validate_input(entry)
         self.assertEqual((1, 1), self.game.validate_input('1 1'))
         self.assertEqual((3, 3), self.game.validate_input('  3    3 '))
 

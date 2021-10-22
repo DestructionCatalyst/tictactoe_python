@@ -31,17 +31,17 @@ class TicTacGame:
         """
         Prints top line of the board
         """
-        print('\u250c\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2510')
+        print('┌───┬───┬───┐')
 
     def draw_line(self, line_number):
         """
         Print n-th line of the grid to the console
         :param line_number: number of line to print (0-2)
         """
-        print('\u2502 ' + self.get_tile(0, line_number) +
-              ' \u2502 ' + self.get_tile(1, line_number) +
-              ' \u2502 ' + self.get_tile(2, line_number) +
-              ' \u2502 ' + str(line_number + 1))
+        print('│ ' + self.get_tile(0, line_number) +
+              ' │ ' + self.get_tile(1, line_number) +
+              ' │ ' + self.get_tile(2, line_number) +
+              ' │ ' + str(line_number + 1))
 
     def get_tile(self, x, y):
         """
@@ -61,14 +61,14 @@ class TicTacGame:
         """
         Prints middle line of the board
         """
-        print('\u251c\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2524')
+        print('├───┼───┼───┤')
 
     @staticmethod
     def draw_bottom():
         """
         Prints bottom line of the board
         """
-        print('\u2514\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2518')
+        print('└───┴───┴───┘')
         print('  1   2   3  ')
 
     def validate_input(self, raw_input):
